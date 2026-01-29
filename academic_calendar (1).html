@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Calendar Jan'26 Session</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e27;
+            --bg-secondary: #141830;
+            --bg-card: #1a1f3a;
+            --accent-primary: #f39c12;
+            --accent-secondary: #3498db;
+            --accent-tertiary: #e74c3c;
+            --accent-success: #27ae60;
+            --accent-purple: #9b59b6;
+            --text-primary: #ecf0f1;
+            --text-secondary: #95a5a6;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0a0e27 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(243, 156, 18, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(52, 152, 219, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .header h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+            animation: fadeIn 1s ease-out 0.3s backwards;
+        }
+
+        .search-box {
+            flex: 1;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 4px rgba(243, 156, 18, 0.1);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 24px;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            font-weight: 500;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .filter-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 4px 12px rgba(243, 156, 18, 0.2);
+        }
+
+        .filter-btn.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            color: var(--bg-primary);
+            font-weight: 600;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 5px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 5px;
+        }
+
+        .view-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+        }
+
+        .view-btn.active {
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out 0.5s backwards;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent-primary);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Crimson Pro', serif;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        /* Description Cards */
+        .descriptions-section {
+            margin-bottom: 60px;
+            animation: fadeIn 1s ease-out 0.7s backwards;
+        }
+
+        .descriptions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .description-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 28px;
+            border-left: 4px solid var(--card-accent);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--card-accent);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .description-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-left-width: 6px;
+        }
+
+        .description-card.orientation { --card-accent: var(--accent-secondary); }
+        .description-card.milestones { --card-accent: var(--accent-success); }
+        .description-card.campus { --card-accent: var(--accent-purple); }
+        .description-card.webinar { --card-accent: var(--accent-tertiary); }
+
+        .description-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            gap: 10px;
+        }
+
+        .description-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .description-badge {
+            padding: 6px 12px;
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px solid var(--accent-primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-primary);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .description-content {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .timeline-container {
+            position: relative;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--accent-primary), var(--accent-secondary), var(--accent-tertiary));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.6s ease-out backwards;
+            animation-delay: calc(var(--index) * 0.05s);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -37px;
+            top: 12px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--event-color, var(--accent-primary));
+            border: 3px solid var(--bg-primary);
+            box-shadow: 0 0 0 3px var(--event-color, var(--accent-primary));
+            z-index: 2;
+        }
+
+        .event-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--event-color, var(--accent-primary));
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .event-card:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow);
+            border-left-width: 6px;
+        }
+
+        .event-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'Crimson Pro', serif;
+            flex: 1;
+        }
+
+        .semester-badge {
+            padding: 6px 12px;
+            background: rgba(243, 156, 18, 0.1);
+            border: 1px solid var(--accent-primary);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-primary);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .event-activity {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .event-dates {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .date-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .date-icon {
+            color: var(--event-color, var(--accent-primary));
+            font-weight: 700;
+        }
+
+        .grid-view {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .grid-view .event-card {
+            height: 100%;
+        }
+
+        .grid-view .timeline-item::before {
+            display: none;
+        }
+
+        .grid-view .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state svg {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-family: 'Crimson Pro', serif;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline {
+                padding-left: 30px;
+            }
+
+            .timeline::before {
+                left: 10px;
+            }
+
+            .timeline-item::before {
+                left: -27px;
+            }
+
+            .grid-view {
+                grid-template-columns: 1fr;
+            }
+
+            .descriptions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                max-width: 100%;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Event type colors */
+        .event-orientation { --event-color: #3498db; }
+        .event-exam { --event-color: #e74c3c; }
+        .event-session { --event-color: #9b59b6; }
+        .event-milestone { --event-color: #27ae60; }
+        .event-assignment { --event-color: #f39c12; }
+        .event-default { --event-color: #34495e; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Academic Calendar</h1>
+            <p>Jan'26 Session</p>
+        </div>
+
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalEvents">0</div>
+                <div class="stat-label">Total Events</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="sem1Count">0</div>
+                <div class="stat-label">Semester I</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="sem2Count">0</div>
+                <div class="stat-label">Semester II</div>
+            </div>
+        </div>
+
+        <!-- Descriptions Section -->
+        <div class="descriptions-section">
+            <div class="descriptions-grid">
+                <div class="description-card orientation">
+                    <div class="description-header">
+                        <div class="description-title">The Program Orientation:</div>
+                        <div class="description-badge">Semester II (Jan 2026)</div>
+                    </div>
+                    <div class="description-content">
+                        Program orientation is a crucial process aimed at familiarizing students with a specific program. During orientation, students receive essential information about the program's objectives, policies, and procedures. This process often includes introductions to key staff members, and an overview of the program structure and assessment.
+                    </div>
+                </div>
+
+                <div class="description-card milestones">
+                    <div class="description-header">
+                        <div class="description-title">Milestones:</div>
+                        <div class="description-badge">Semester II (Jan 2026)</div>
+                    </div>
+                    <div class="description-content">
+                        Every module in the curriculum is thoughtfully designed to include comprehensive learning content and engaging student activities such as the Discussion forum, to promote active learning and interaction. Students are encouraged to thoroughly explore all the learning materials and actively participate in the provided engagement activities.
+                    </div>
+                </div>
+
+                <div class="description-card campus">
+                    <div class="description-header">
+                        <div class="description-title">On-Campus Classes:</div>
+                        <div class="description-badge">Semester II (Jan 2026)</div>
+                    </div>
+                    <div class="description-content">
+                        The On-Campus Classes are conducted at the end of each semester to assist students in preparing for their upcoming exams. During the sessions, students have the opportunity to interact with their professors and peers in person, creating a conducive environment for active learning and collaborative discussions.
+                    </div>
+                </div>
+
+                <div class="description-card webinar">
+                    <div class="description-header">
+                        <div class="description-title">End-Term Examination (ETE) Webinars:</div>
+                        <div class="description-badge">Semester II (Jan 2026)</div>
+                    </div>
+                    <div class="description-content">
+                        The End-Term Examination (ETE) Webinars are conducted at the end of the semester, providing students with valuable guidance and preparation for their upcoming exams. These webinars aim to equip students with essential knowledge and clarify doubts and receive expert insights on exam-related queries.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search events, activities, or dates...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Events</button>
+                <button class="filter-btn" data-filter="sem1">Semester I</button>
+                <button class="filter-btn" data-filter="sem2">Semester II</button>
+            </div>
+            <div class="view-toggle">
+                <button class="view-btn active" data-view="timeline">Timeline</button>
+                <button class="view-btn" data-view="grid">Grid</button>
+            </div>
+        </div>
+
+        <div class="timeline-container">
+            <div id="eventsContainer" class="timeline"></div>
+        </div>
+    </div>
+
+    <script>
+        const calendarData = [
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ONLINE CAMPUS ACCESS",
+    "activity": "Access to University Resources and Academic Courses on the Student Portal",
+    "start_date": "On Enrollment",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ACADEMIC SESSION",
+    "activity": "Commencement of Academic Session",
+    "start_date": "January 20, 2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ONLINE PROGRAM ORIENTATION     (Phase-I)",
+    "activity": "Program Orientation Phase I    (Virtual-PG & UG )",
+    "start_date": "January 30, 2025",
+    "end_date": "February 2nd , 2025"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ADVANCED CERTIFICATE IN CAREER  READINESS  SESSIONS (ACCR) Phase I",
+    "activity": "PG & UG",
+    "start_date": "February 12th , 2025",
+    "end_date": "March 28th, 2025        April 4th, 2025*"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "VIRTUAL LIVE CLASSES   (Phase I)",
+    "activity": "Commencement of Virtual Live Classes \n(UG & PG  Semester I )",
+    "start_date": "February  15th , 2025",
+    "end_date": "March 30th, 2025"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ADVANCED CERTIFICATE IN CAREER  READINESS  SESSIONS (ACCR) Phase II",
+    "activity": "\nPG & UG",
+    "start_date": "April 2nd, 2025 ( Day)",
+    "end_date": "May 16th, 2025             May 23rd, 2025*"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ASSIGNMENT OPENING",
+    "activity": "Assignment (Opening Date)",
+    "start_date": "February  15th , 2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ONLINE PROGRAM ORIENTATION      (Phase-II)",
+    "activity": "Program Orientation Phase II  (Virtual- PG & UG)",
+    "start_date": "April 24th, 2025",
+    "end_date": "April 27th, 2025"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "VIRTUAL LIVE CLASSES \n (Phase II)",
+    "activity": "Commencement of Virtual Live Classes (UG & PG )",
+    "start_date": "April 5th, 2025",
+    "end_date": "May 30th, 2025"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "SAMAGAM\nOffline Orientation",
+    "activity": "Offline Orientation",
+    "start_date": "May 3rd, 2025",
+    "end_date": "May 3rd, 2025"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "MILESTONE 1",
+    "activity": "Learning Activities",
+    "start_date": "March 30th, 2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "MILESTONE 2",
+    "activity": "Learning Activities",
+    "start_date": "April 20th, 2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "MILESTONE 3",
+    "activity": "Learning Activities",
+    "start_date": "May 10th, 2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "MILESTONE 4",
+    "activity": "Learning Activities",
+    "start_date": "May 30th, 2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "MILESTONE 5",
+    "activity": "Learning Activities",
+    "start_date": "June 20th,  2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "MILESTONE 6",
+    "activity": "Completion of Assignment 2 (Case Study)",
+    "start_date": "July  7th, 2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "END TERM EXAMINATION (ETE) NOTIFICATION",
+    "activity": "Notification of  End - Term Examination",
+    "start_date": "June 25th, 2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ADMIT CARD GENERATION",
+    "activity": "Admit Card Generation (Slot Booking)",
+    "start_date": "July 1st, 2025 onwards",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ETE WEBINARS",
+    "activity": "Webinar on End-Term Examination",
+    "start_date": "July 1st, 2025 onwards",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ON-CAMPUS CLASSES",
+    "activity": "On-Campus Doubt Clearing Sessions",
+    "start_date": "July  1st, 2025",
+    "end_date": "July 6th, 2025"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ETE MOCK TEST WEEK",
+    "activity": "ETE Mock Test Week",
+    "start_date": "July 5th, 2025 onwards",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "ASSIGNMENT CLOSING",
+    "activity": "Last date for Submission of  Assignments",
+    "start_date": "July 7th, 2025",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "LAST MINUTE REVISION (LMR)",
+    "activity": "Last Minute Revision Virtual Session (LMR)",
+    "start_date": "July 10th, 2025",
+    "end_date": "July 15th, 2025"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "EXAMINATION",
+    "activity": "Semester End Term Examination Including Practical/Lab Examination",
+    "start_date": "July 22nd, 2025",
+    "end_date": "August 7th, 2025"
+  },
+  {
+    "semester": "Semester I (Feb 2025)",
+    "event": "RESULT",
+    "activity": "Result Declaration of ETE",
+    "start_date": "September  7th, 2025 onwards",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "ACADEMIC SESSION",
+    "activity": "Commencement of Academic Session",
+    "start_date": "February 10th, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "ONLINE DIGITAL  CAMPUS  ACCESS",
+    "activity": "Access to University Resources and Academic Courses on the Student Portal",
+    "start_date": "",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "SEMESTER INDUCTION           (Semester II onwards)",
+    "activity": "Semester Induction  (Virtual)\nPG & UG  (Semester II onwards )",
+    "start_date": "February 13th, 2026",
+    "end_date": "February 14th, 2026"
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "VIRTUAL LIVE CLASSES \n( Semester II onwards)",
+    "activity": "Commencement of Virtual Live Classes\n(UG & PG  Semester II onwards)",
+    "start_date": "February 16th, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "DATESHEET PUBLICATION FOR SUPPLEMENTARY EXAMS",
+    "activity": "",
+    "start_date": "April 10th, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "ADMIT CARD  BOOKING FOR SUPPLEMENTARY EXAMS",
+    "activity": "",
+    "start_date": "April 15th, 2026  onwards",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "LAST DATE TO APPLY FOR SUPPLEMENTARY EXAMS",
+    "activity": "PG & UG",
+    "start_date": "April 22nd, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "SUPPLEMENTARY EXAMINATIONS",
+    "activity": "PG & UG",
+    "start_date": "April 24th, 2026",
+    "end_date": "May 5th, 2026"
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "ASSIGNMENT OPENING",
+    "activity": "Assignment (Opening Date)",
+    "start_date": "March 02nd, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "PROJECT WORK OPENING",
+    "activity": "Project Work (Opening Date)",
+    "start_date": "March 02nd, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "MID YEAR MEETUP",
+    "activity": "PG & UG",
+    "start_date": "April 18th, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "MILESTONE 1",
+    "activity": "Learning Activities",
+    "start_date": "25th April, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "MILESTONE 2",
+    "activity": "Learning Activities",
+    "start_date": "5th May , 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "MILESTONE 3",
+    "activity": "Learning Activities",
+    "start_date": "15th May, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "MILESTONE 4",
+    "activity": "Learning Activities",
+    "start_date": "25th May, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "MILESTONE 5",
+    "activity": "Learning Activities",
+    "start_date": "5th June, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "MILESTONE 6",
+    "activity": "Completion of Assignment 2 (Case Study)",
+    "start_date": "15th June  2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "SUPPLEMENTARY RESULT DECLARATION",
+    "activity": "",
+    "start_date": "May 20th, 2026 onwards",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "END TERM EXAMINATION (ETE) NOTIFICATION",
+    "activity": "Notification of  End - Term Examination",
+    "start_date": "25th May 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "ADMIT CARD GENERATION",
+    "activity": "Admit Card Generation (Slot Booking)",
+    "start_date": "5th June, 2026 onwards",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "ETE WEBINAR",
+    "activity": "Webinar on End-Term Examination",
+    "start_date": "5th June, 2026 onwards",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "LAST MINUTE REVISION (LMR)",
+    "activity": "Last Minute Revision Virtual Session (LMR)",
+    "start_date": "5th June, 2026",
+    "end_date": "11th June, 2026"
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "ETE MOCK TEST WEEK",
+    "activity": "ETE Mock Test Week",
+    "start_date": "9th  June, 2026",
+    "end_date": "16th June 2026"
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "ON-CAMPUS CLASSES",
+    "activity": "On-Campus Doubt Clearing Sessions",
+    "start_date": "11th June 2026",
+    "end_date": "14th June 2026"
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "ASSIGNMENT CLOSING",
+    "activity": "Last date for Submission of  Assignments",
+    "start_date": "15th June, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "PROJECT WORK CLOSING",
+    "activity": "Last date for Submission of Project Work",
+    "start_date": "15th June, 2026",
+    "end_date": ""
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "EXAMINATION",
+    "activity": "Semester End Term Examination Including Practical/Lab Examination",
+    "start_date": "25th June, 2026",
+    "end_date": "12th  July,2026"
+  },
+  {
+    "semester": "Semester II (Jan 2026)",
+    "event": "RESULT",
+    "activity": "Result Declaration of ETE",
+    "start_date": "12th  August, 2026 onwards",
+    "end_date": ""
+  }
+];
+
+        let allEvents = calendarData;
+        let filteredEvents = [...allEvents];
+        let currentView = 'timeline';
+
+        function getEventType(eventName) {
+            const name = eventName.toLowerCase();
+            if (name.includes('orientation') || name.includes('induction')) return 'orientation';
+            if (name.includes('exam') || name.includes('ete') || name.includes('result')) return 'exam';
+            if (name.includes('session') || name.includes('class') || name.includes('webinar')) return 'session';
+            if (name.includes('milestone')) return 'milestone';
+            if (name.includes('assignment')) return 'assignment';
+            return 'default';
+        }
+
+        function renderEvents() {
+            const container = document.getElementById('eventsContainer');
+            
+            if (filteredEvents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                        <h3>No events found</h3>
+                        <p>Try adjusting your search or filter criteria</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.className = currentView === 'timeline' ? 'timeline' : 'grid-view';
+            
+            container.innerHTML = filteredEvents.map((event, index) => {
+                const eventType = getEventType(event.event);
+                const dates = [];
+                
+                if (event.start_date && event.start_date !== 'nan') {
+                    dates.push(`<div class="date-item"><span class="date-icon">📅</span> ${event.start_date}</div>`);
+                }
+                if (event.end_date && event.end_date !== 'nan' && event.end_date !== event.start_date) {
+                    dates.push(`<div class="date-item"><span class="date-icon">📅</span> ${event.end_date}</div>`);
+                }
+
+                return `
+                    <div class="timeline-item event-${eventType}" style="--index: ${index}">
+                        <div class="event-card">
+                            <div class="event-header">
+                                <div class="event-title">${event.event}</div>
+                                <div class="semester-badge">${event.semester}</div>
+                            </div>
+                            ${event.activity ? `<div class="event-activity">${event.activity}</div>` : ''}
+                            ${dates.length > 0 ? `<div class="event-dates">${dates.join('')}</div>` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateStats() {
+            const sem1Events = allEvents.filter(e => e.semester.includes('Semester I'));
+            const sem2Events = allEvents.filter(e => e.semester.includes('Semester II'));
+            
+            document.getElementById('totalEvents').textContent = allEvents.length;
+            document.getElementById('sem1Count').textContent = sem1Events.length;
+            document.getElementById('sem2Count').textContent = sem2Events.length;
+        }
+
+        function filterEvents(filterType) {
+            if (filterType === 'all') {
+                filteredEvents = [...allEvents];
+            } else if (filterType === 'sem1') {
+                filteredEvents = allEvents.filter(e => e.semester.includes('Semester I'));
+            } else if (filterType === 'sem2') {
+                filteredEvents = allEvents.filter(e => e.semester.includes('Semester II'));
+            }
+            renderEvents();
+        }
+
+        function searchEvents(query) {
+            const searchTerm = query.toLowerCase();
+            filteredEvents = allEvents.filter(event => 
+                event.event.toLowerCase().includes(searchTerm) ||
+                event.activity.toLowerCase().includes(searchTerm) ||
+                event.start_date.toLowerCase().includes(searchTerm) ||
+                event.end_date.toLowerCase().includes(searchTerm)
+            );
+            renderEvents();
+        }
+
+        // Event Listeners
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterEvents(btn.dataset.filter);
+            });
+        });
+
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentView = btn.dataset.view;
+                renderEvents();
+            });
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            searchEvents(e.target.value);
+        });
+
+        // Initialize
+        updateStats();
+        renderEvents();
+    </script>
+</body>
+</html>
